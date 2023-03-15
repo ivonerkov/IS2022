@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<EShop.Domain.Identity.ShopApplicationUser> SignInManager
+@inject UserManager<EShop.Domain.Identity.ShopApplicationUser> UserManager
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @User.Identity.Name <i class="fa fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>

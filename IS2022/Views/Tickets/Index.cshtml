@@ -1,0 +1,148 @@
+﻿@model List<EShop.Domain.Domain_models.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+
+
+    .content {
+        width: 420px;
+        margin-top: 100px;
+    }
+
+    .ratings {
+        background-color: #fff;
+        padding: 54px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 10px 10px #E0E0E0;
+    }
+
+    .product-rating {
+        font-size: 50px;
+    }
+
+    .stars i {
+        font-size: 18px;
+        color: #28a745;
+    }
+
+    .rating-text {
+        margin-top: 10px;
+    }
+    .container{
+        max-width: 1500px;
+        margin: auto;
+    }
+    .conta{
+        max-width: 1170px;
+        margin-left: auto;
+    }
+    .button {
+        background-color: white;
+        color: black;
+        border: 1px solid lightgray ; 
+        transition-duration: 0.2s;
+    }
+        .button:hover {
+            background-color: lightgray; 
+            color: white;
+        }
+    a {
+        color: darkslategray;
+    }
+</style>
+
+
+
+
+<div class="p-5 text-center bg-image"
+     style=" background-image: url('http://cdn.home-designing.com/wp-content/uploads/2016/09/Amber-lit-staircase-iron-ore-living-luscious-green-panel-dim-lighting.jpg'); height: 350px; ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="mb-3">Lectures </h1>
+                
+
+                    
+
+                        <span class="product-rating">4.6</span><span>/5</span>
+                        <div class="stars">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+
+                        <div class="rating-text">
+
+                            <span>46 ratings & 15 reviews</span>
+
+                        </div>
+  
+                        <a class="btn btn-outline-light btn-lg" asp-area="Tickets" asp-action="Create">Add new lecture</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="conta">
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var item = Model[i];
+        if (i % 3 == 0)
+        {
+            @:<div class="row">
+            }
+            <div class="card" style="width: 18rem; margin-right:15px">
+                <img src="@item.MovieBillboard" style="max-width:300px" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@item.MovieName</h5>
+                    <p class="card-text">Course: @item.MovieGenre</p>
+                    @{
+                        int k = item.Rating;
+                        for (int f = 5; f > 0; f--)
+                        {
+                            if (k > 0)
+                            {
+                                <span class="fa fa-star checked"></span>
+
+                            }
+                            else
+                            {
+
+                                <!--<span class="fa fa-star"></span>-->
+                                <b> <span style="font-size:115%;color:orange;">&star;</span></b>
+                            }
+                            k--;
+                        }
+                    }
+                    <br />
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn button">Edit</a>
+                    <!--<a asp-action="Delete" asp-route-id="@item.Id" class="btn button">Delete</a>-->
+                    <a href="/Tickets/AddToCart?ticketId=@item.Id&cartId=1">Add to cart <i class='fas fa-shopping-cart'></i></a>
+                </div>
+
+            </div>
+
+            if (i % 3 == 2)
+            {
+            @:</div>
+        }
+    }
+
+
+</div>
+

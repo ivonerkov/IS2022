@@ -1,0 +1,262 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<EShop.Domain.StripeSettings> Stripe
+@model EShop.Domain.DTO.ShoppingCartDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .container {
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .table {
+            border-collapse: separate;
+            margin: 0px;
+            margin-left: 0px;
+        }
+
+        .noBorder td {
+            border-style: hidden;
+        }
+    </style>
+</head>
+<body background="https://amazingarchitecture.com/storage/files/1/Architecture%20firms/Kireeva%20Anna/Black%20house%20in%20the%20woods/Black-house-in-the-woods-Kireeva-Anna-USA-001.jpg">
+    <div class="content">
+
+
+
+        @if (Model.TicketsInShoppingCart.Count == 0)
+        {
+            <h5>No tickets in the shopping cart</h5>
+
+
+            <div class="row">
+
+                <div class="content col-lg-7" style="background-color: white; border-radius: 10px;">
+
+                    <table class="table">
+                        <tbody>
+                            <tr class="noBorder">
+                                <td class="col-md-1"><b>Number</b></td>
+                                <td class="col"><b>Lecture</b></td>
+                                <td class="col"><b>Quantity</b></td>
+                                <td class="col"><b>Price</b></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>/</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div>
+                        <a class="btn btn-outline-info btn-lg" style="font-size:smaller; font-style:italic; font-weight:bold" asp-area="" asp-controller="Tickets" asp-action="Index">
+                            Empty shopping cart? Go shop NOW!
+                        </a>
+                    </div>
+                    <br />
+                </div>
+
+
+                <div style="padding:20px;" class="col-lg-5">
+                    <div style="border-radius: 10px; padding: 30px; background-color: white" ;>
+                        <div><h5><b>Summary</b></h5></div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">No. of lectures: 0</div>
+                            <div class="col text-right">/</div>
+                        </div>
+                        <br />
+                        <form method="post" action="/" class="product-item">
+                            <!--<input type="hidden" value="10" name="price">-->
+                            <h6>SELECT SHIPPING</h6>
+                            <select disabled name="quantity" class="product-select" tabindex="1">
+                                <option value="0">Standard delivery</option>
+                                <option value="5">Premium delivery ($5+)</option>
+                            </select>
+                            <hr />
+                            <div class="row">
+                                <div class="col">NEW TOTAL: </div>
+                                <div class="col text-right">/</div>
+                            </div>
+                            <div class="row">
+                                <div class="col" style="font-weight: 500; color: gray; font-size:10px; font-style:italic">estimated time delivery</div>
+                                <div class="col text-right " style="font-weight: 500; color: gray; font-size:10px; font-style:italic">5-7 business days</div>
+                            </div>
+                        </form>
+                        <!--<div class="row" style="padding: 2vh 0;">
+                <div class="col">TOTAL PRICE</div>
+                <div class="col text-right">$@(Model.TotalPrice/100)</div>
+            </div>-->
+                        <div class="row m-3">
+                            @if (Model.TotalPrice != 0)
+                            {
+                                <form asp-controller="ShoppingCart" asp-action="PayOrder" method="post">
+                                    <article>
+                                        <script src="https://checkout.stripe.com/checkout.js"
+                                                class="stripe-button"
+                                                data-key="@Stripe.Value.PublishableKey"
+                                                data-locale="auto"
+                                                data-description="EShop Application Payment"
+                                                data-label="Pay now">
+                                        </script>
+                                    </article>
+                                </form>
+                                <!--data-amount="@Model.TotalPrice" bi bilo bo stipe nad data-label pod data-description-->
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+
+        else
+        {
+            <div class="row">
+
+                <div class="content col-lg-7" style="background-color: white; border-radius: 10px;">
+
+                    <table class="table">
+                        <tbody>
+                            <tr class="noBorder">
+                                <td class="col-md-1"><b>Number</b></td>
+                                <td class="col"><b>Lecture</b></td>
+                                <td class="col"><b>Quantity</b></td>
+                                <td class="col"><b>Price</b></td>
+                                <td></td>
+                            </tr>
+                            @{
+                                var i = 1;
+                                foreach (var item in Model.TicketsInShoppingCart)
+                                {
+                                    <tr>
+                                        <td>
+                                            #@(i++)
+                                        </td>
+                                        <td>
+                                            <!--@item.Ticket.MovieName-->
+                                            <div class="card mb-3" style="max-width: 300px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img src="@item.Ticket.MovieBillboard" style="max-width: 100px;" class="img-fluid rounded-start" alt="...">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">@item.Ticket.MovieName</h6>
+                                                            <p class="card-text"><small class="text-muted">@item.Ticket.MovieGenre</small></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @item.Quantity
+                                        </td>
+                                        <td>
+                                            $@(@item.Ticket.TicketPrice/100)
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" href="/ShoppingCart/DeleteFromShoppingCart/@item.Ticket.Id"> <i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <div style="padding:20px;" class="col-lg-5">
+                    <div style="border-radius: 10px; padding: 30px; background-color: white" ;>
+                        <div><h5><b>Summary</b></h5></div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">No. of lectures: @(i-1)</div>
+                            <div class="col text-right">$@(Model.TotalPrice/100)</div>
+                        </div>
+                        <br />
+                        <form method="post" action="/" class="product-item">
+                            <!--<input type="hidden" value="10" name="price">-->
+                            <h6>SELECT SHIPPING</h6>
+                            <select name="quantity" class="product-select" tabindex="1">
+                                <option value="0">Standard delivery</option>
+                                <option value="5">Premium delivery ($5+)</option>
+                            </select>
+                            <hr />
+                            <div class="row">
+                                <div class="col">NEW TOTAL: </div>
+                                <div class="col text-right total-price">$@(Model.TotalPrice/100)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col" style="font-weight: 500; color: gray; font-size:10px; font-style:italic">estimated time delivery</div>
+                                <div class="col text-right deliv-dayss" style="font-weight: 500; color: gray; font-size:10px; font-style:italic">5-7 business days</div>
+                            </div>
+                        </form>
+                        <!--<div class="row" style="padding: 2vh 0;">
+                        <div class="col">TOTAL PRICE</div>
+                        <div class="col text-right">$@(Model.TotalPrice/100)</div>
+                    </div>-->
+                        <div class="row m-3">
+                            @if (Model.TotalPrice > 0)
+                            {
+                                <form asp-controller="ShoppingCart" asp-action="PayOrder" method="post">
+                                    <article>
+                                        <script src="https://checkout.stripe.com/checkout.js"
+                                                class="stripe-button"
+                                                data-key="@Stripe.Value.PublishableKey"
+                                                data-locale="auto"
+                                                data-description="EShop Application Payment"
+                                                data-label="Pay now">
+                                        </script>
+                                    </article>
+                                </form>
+                                <!--data-amount="@Model.TotalPrice" bi bilo bo stipe nad data-label pod data-description-->
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+    jQuery('.product-select').on('change', function () {
+        var el = $(this);
+        var quantity = parseInt(el.val());
+        //alert("You have selected the country - " + quantity);
+        var price = @Model.TotalPrice;
+        var newPrice = (quantity + (price / 100)).toFixed(2);
+        el.closest('.product-item').find('.total-price').text("$" + newPrice);
+        if (quantity == "5") {
+            el.closest('.product-item').find('.deliv-dayss').text("2-3 business days");
+        }
+        else if (quantity == "0") {
+            el.closest('.product-item').find('.deliv-dayss').text("5-7 business days");
+        }
+    });
+    </script>
+
+</body>

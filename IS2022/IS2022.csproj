@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-IS2022-044CEEDC-4CF2-4DD8-8D01-2E54B74138FA</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.24" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.25">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Stripe.net" Version="39.122.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Service\Service.csproj" />
+  </ItemGroup>
+
+</Project>

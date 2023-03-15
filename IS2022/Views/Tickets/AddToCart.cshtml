@@ -1,0 +1,113 @@
+﻿@model EShop.Domain.DTO.AddToShoppingCartDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .checked {
+        color: orange;
+    }
+    .container {
+        max-width: 1500px;
+        margin: auto;
+    }
+    .content{
+        max-width: 700px;
+        margin-left: auto;
+    }
+    .product-rating {
+        font-size: 30px;
+        font-style: italic;
+    }
+    sup {
+        color: lightslategrey;
+        font-style: normal;
+        font-size: 20px;
+    }
+    
+</style>
+
+<div class="row">
+
+
+    <div class="content col-lg-7" style="background-color:white;">
+        <br />
+
+        <div class="oaoa">
+            <div class="col-md-7">
+                <form asp-action="AddToShoppingCart">
+                    <h4>Add lecture to shopping cart</h4>
+                    <input type="hidden" asp-for="TicketId" />
+                    <div class="form-group">
+                        <input disabled class="form-control" asp-for="SelectedTicket.MovieName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Amount CD's:</label>
+                        <input type="number" class="form-control" asp-for="Quantity" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-outline-info" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br />
+        <div class="p-5 text-center bg-image"
+             style=" background-image: url('http://cdn.home-designing.com/wp-content/uploads/2016/09/Amber-lit-staircase-iron-ore-living-luscious-green-panel-dim-lighting.jpg'); height: 150px; border-radius: 15px; ">
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="text-white">
+                        <!--<a class="btn btn-outline-light btn-lg" asp-area="Identity" asp-page="/Account/Register">Continue shopping</a>-->
+                        <a class="btn btn-outline-light btn-lg" asp-area="" asp-controller="Tickets" asp-action="Index">
+                            Continue shopping 
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-lg-5" style="background-color:white;">
+
+        <div class="card" style="width: 18rem; margin-right:15px">
+            <img src="@Model.SelectedTicket.MovieBillboard" style="max-width:300px" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@Model.SelectedTicket.MovieName  </h5>
+                <p class="card-text">Course: @Model.SelectedTicket.MovieGenre</p>
+                <span class="product-rating font-weight-light">$@(@Model.SelectedTicket.TicketPrice/100)<sup>/taxes included</sup></span> <br />
+                @{
+                    int k = Model.SelectedTicket.Rating;
+                    for (int f = 5; f > 0; f--)
+                    {
+                        if (k > 0)
+                        {
+                            <span class="fa fa-star checked"></span>
+
+                        }
+                        else
+                        {
+
+                            <!--<span class="fa fa-star"></span>-->
+                            <b> <span style="font-size:115%;color:orange;">&star;</span></b>
+                        }
+                        k--;
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

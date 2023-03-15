@@ -1,0 +1,48 @@
+﻿@model EShop.Domain.Domain_models.Ticket
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <h4>Details for selected lecture</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MovieName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MovieName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MovieBillboard)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MovieBillboard)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MovieGenre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MovieGenre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TicketPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TicketPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
